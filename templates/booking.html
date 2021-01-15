@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+   <head>
+	    <meta charset="utf-8"/>
+      <title>Booking</title>
+	   
+	   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	   <link href='https://fonts.googleapis.com/css?family=Bungee%20Hairline' rel='stylesheet'>
+       <link href='https://fonts.googleapis.com/css?family=Arbutus%20Slab' rel='stylesheet'>
+	   <link rel = "stylesheet" type = "text/css" href = "/static/style.css" >
+	   <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+	   <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+	   <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+	   <script src="js/jquery.ui.datepicker-fr.js"></script>
+
+	
+  <script>	  
+/********************************************************************************************
+* Setting departure date as arrival date +1 on calendar
+* This was adapted from a post from littlebigman on 2012 to a jQuery forum
+* forum here:
+* https://forum.jquery.com/topic/datepicker-set-departure-date-as-arrival-date-1
+*/  
+		$(function(){
+  		$('#aDate').datepicker({showOn: 'button',minDate: 0, dateFormat: "yy-mm-dd",
+								
+			onSelect: function() {
+				var date = $(this).datepicker('getDate');
+				if (date){
+					date.setDate(date.getDate() + 1);
+					$( "#dDate" ).datepicker( "option", "minDate", date );
+				}
+			}  		
+  		}); 
+			
+			$('#dDate').datepicker({showOn: 'button',minDate: 0,dateFormat: "yy-mm-dd"});
+			
+		});
+/***********************************************************************************************/
+	  
+/***********************************************************************************************
+* HTML Form with Javascript Validation & Alert
+* This was adapted from a post from Barmar on Jan 16 2014 at 1:22 to a stackoverflow
+* forum here:
+* https://stackoverflow.com/questions/21151687/html-form-with-javascript-validation-alert
+*/
+function validForm(form)   
+{
+    var alerts = [];
+    if (document.form.aDate.value=="")
+    {
+        alerts.push("Please choose arrival date");
+    }
+    if (document.form.dDate.value=="")
+    {
+        alerts.push("Please choose departure date");
+    }
+	if (document.form.room.value=="")
+    {
+        alerts.push("Please choose the room");
+    }
+	if (document.form.bName.value=="")
+    {
+        alerts.push("Please enter your name");
+    }
+	if (document.form.email.value=="")
+    {
+        alerts.push("Please enter your email");
+    }
+    if (alerts.length > 0) {
+        alert(alerts.join('\n'));
+        return false;
+    } else {
+        return true;
+    }
+}
+
+	   </script>
+	   </head>
+	
+<body>
+	
+	   <div id="page">
+
+		<h1> <br> hotel </h1> <h1 class="nd">Gioacchino</h1>
+		
+		<div id="nav">
+
+				<form action="/" method="get"><button class="button">Homepage <i class="fa fa-home" aria-hidden="true"></i></button></form>
+
+		</div>
+
+	   </div>
+	   
+	<!-- Room booking form -->
+	   <div class="content1">
+		   
+		   <h2>Fill the details of your booking</h2>
+		   
+	   <form id="form" name="form" action = "addBook" method = "post"  onsubmit="return validForm();">
+		   
+		   <table>
+			   <tr>
+		       <td>Arrival date:</td>
+			   <td> <input id="aDate" name="aDate" type="text" placeholder="yyyy-mm-dd"> </td>
+			   </tr>
+			   <tr>
+			   <td> Departure date: </td>
+			   <td> <input id="dDate" name="dDate" type="text" placeholder="yyyy-mm-dd"> </td>
+			   </tr> 
+		   </table>
+			   
+			  <select name ="room">
+				   <option value="Room 1"> Room 1 </option>
+				   <option value="Room 2"> Room 2 </option>
+				   <option value="Room 3"> Room 3 </option>
+				   <option value="Room 4"> Room 4 </option>
+				   <option value="Room 5"> Room 5 </option>
+			   </select>
+			
+	       <br>Name:
+           <input type = "text" name = "bName" placeholder="Your name...">
+           Email:
+           <input type = "text" name = "email" placeholder="Your email...">
+           <input type = "submit" value = "Submit" >
+		   
+	   </form>
+	
+	   </div>
+
+<!-- List of confirmed booked rooms -->
+<div class = "content1">
+	
+	<h2>Booked rooms</h2>
+	
+	<table border="2px black">
+    <tr>
+	<th>From:</th>
+	<th>To:</th>
+	<th>Room:</th>
+    </tr>
+        {% for line in bookList %}
+          <tr>
+            {% for item in line [:3] %}
+            <td>
+               {{item}}
+            </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+    </table>
+	
+</div>
+
+<!-- Room booking process check box-->
+  <div class="content1">
+	  
+	<h2>Check your bookings here!</h2>
+	  
+	<form action = "bookCheck" method = "post">
+		Enter your email:
+		<input type="text" name="emailA" placeholder="Your email...">
+		<input type="submit" value="Submit">
+	</form>
+	  
+	<table border="2px black">
+    <tr>
+    </tr>
+        {% for line in outList %}
+          <tr>
+            {% for item in line [:4] %}
+            <td>
+              {{item}}
+            </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+    </table>
+	  
+	<h2> {{srr}} </h2>
+	  
+  </div>
+
+  		<div id="footer">
+			<p>
+				Address: Norwich Research Park, Norwich NR4 7TJ || Phone number: 074546545654 || Email: Gioacchino@email.com
+			</p>
+		</div>
+		
+		<!-- blank space at the bottom of the page -->
+     <div id="blankSpace"></div>
+  
+</body>
+</html>

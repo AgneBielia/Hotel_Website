@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <meta charset="utf-8"/>
+    <title>Hotel</title>
+
+    <link rel = "stylesheet" type = "text/css" href = "/static/style.css" >
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzTVjvUmqvYoWvosUJ5vWWOTaqg_Diigk&callback=initMap">
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu-916DdpKAjTmJNIgngS6HL_kDIKU0aU&callback=myMap"></script>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bungee%20Hairline">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arbutus%20Slab" >
+
+<script>
+/*
+* HTML Form with Javascript Validation & Alert
+* This was adapted from a post from Barmar on Jan 16 2014 at 1:22 to a stackoverflow
+* forum here:
+* https://stackoverflow.com/questions/21151687/html-form-with-javascript-validation-alert
+*/  
+function validateForm(form)   
+{
+    var alerts = [];
+    if (document.form.name.value=="")
+    {
+        alerts.push("Please fill in your name.");
+    }
+    if (document.form.review.value=="")
+    {
+        alerts.push("Please fill in your review.");
+    }
+    if (alerts.length > 0) {
+        alert(alerts.join('\n'));
+        return false;
+    } else {
+        return true;
+    }
+}
+/********************************************************************************
+* Adding a Google Map with a Marker to Your Website
+* This was adapted from developers.google.com tutorial
+* Tutorial here:
+* https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+*/  
+    function initMap() {
+        var norwich = {lat: 52.6230543, lng: 1.2364519};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: norwich
+        });
+        var marker = new google.maps.Marker({
+          position: norwich,
+          map: map
+        });
+      }
+/*******************************************************************************/  
+	</script>
+	
+</head>
+    
+<body>
+
+    <!-- Hotel title and menu buttons-->
+	<div id="page">
+
+		<h1> <br> hotel </h1> <h1 class="nd">Gioacchino</h1>
+		
+		<div id="nav">
+			<ul class="a">
+				<li><form action="addBook" method="get"><button class="button">Book a room</button></form></li>
+				<li><form action= "local" method="get"><button class="button">Local attractions</button></form></li>
+                <li><a class="button" href= "#content">About</a></li>
+                <li><a class="button" href="#map">Map</a></li>
+                <li><a class="button" href="#reviews">Reviews</a></li>
+			</ul>	
+		</div>
+
+    <!-- Hotel information box -->
+		   <div id="content">
+               
+			  <h2 class="text">About</h2>
+               
+			  <p class="text">
+				  Gioacchino is a brand new hotel with new furnitures and equipments to 
+				  satisfy all its customers. It has only been 2 years since it is here 
+				  but it has already earned quite a good name. Name has the best 
+				  location; it is easy to get to the city and has a beautiful view 
+				  of the cathedral from the rooms.
+			  </p>
+               
+			  <p class="text"> 
+				  If you come with a vehicle have no worries,
+				  we provide free parking space. Enjoy air conditioned rooms with
+				  large bathrooms, an indoor pool and a large gym. This hotel provides
+				  one of the best food.
+			  </p>
+               <p class="text">
+				   Choose us <br>
+				   We guarantee your total satisfaction!
+			   </p>
+		   </div>
+		
+<!--********************************************************************************
+* Slideshow
+* This was adapted from a tutorial on web developer site w3schools.com
+* Tutorial:
+* https://www.w3schools.com/howto/howto_js_slideshow.asp
+-->     
+		
+<div id="slideShow">
+
+<div class="mySlides fade">
+	<!-- Image of Hotel Contessa taken form: http://www.hotel-chinzanso-tokyo.com/ -->
+  <img src="static/hhpool.jpg" alt="hotel pic" style="width:100%">
+</div>
+
+<div class="mySlides fade">
+  <img src="static/hotel.jpg" alt="hotel pic" style="width:100%">
+ 
+</div>
+
+<div class="mySlides fade">
+	<!-- Image of Bien Dong hotel taken form: https://vietnamtravel.agency/featured/bien-dong-hotel.html -->
+  <img src="static/room.jpg" alt="hotel pic" style="width:100%">
+ 
+</div>
+
+<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+<a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+</div>
+</div>
+		
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+</script>
+<!--********************************************************************-->
+		
+    <!-- Map box -->
+    <div id="map">
+    </div>
+    
+    <!-- Review input box -->
+    <div id="reviews">
+        
+      <h2 class="text"> Reviews </h2>
+        
+	   <form id="form" name="form" action = "addEntry" method = "post" onsubmit="return validateForm();" >
+           
+          Name: <br>
+        <input type = "text" name = "name" placeholder="Your name...">
+        
+        <br> Review: <br>
+        <input type = "text" name = "review" placeholder="Your review...">
+		
+    
+<!--********************************************************************************
+* Simple 5-star Rating System with CSS and Html Radios
+* This was adapted from cssscript.com tutorial posted on December 4, 2014
+* Tutorial:
+* https://www.cssscript.com/simple-5-star-rating-system-with-css-and-html-radios/
+* Official page:
+* https://codepen.io/jexordexan/pen/yyYEJa
+* Official author: Jordan Simonds
+-->
+    <div class="stars">
+        Rate us: <br>
+        <input class="star fiveStars" id="fiveStars" type="radio" name="star" value="5"/>
+        <label class="star fiveStars" for="fiveStars"></label>
+        <input class="star fourStars" id="fourStars" type="radio" name="star" value="4"/>
+        <label class="star fourStars" for="fourStars"></label>
+        <input class="star 3Stars" id="3Stars" type="radio" name="star" value="3"/>
+        <label class="star 3Stars" for="3Stars"></label>
+        <input class="star 2Stars" id="2Stars" type="radio" name="star" value="2"/>
+        <label class="star 2Stars" for="2Stars"></label>
+        <input class="star star-1" id="star-1" type="radio" name="star" value="1"/>
+        <label class="star star-1" for="star-1"></label>
+    </div>
+
+        <input type = "submit" value = "Submit" >
+	   </form>
+
+<!--************************************************************************************-->
+
+<!-- Review table-->
+      <table border="2px black">
+    <tr>
+        <th> Date</th>
+       <th>Name</th>
+       <th>Review</th>
+       <th> Rating 1-5</th>
+    </tr>
+        {% for line in reviewList %}
+          <tr>
+            {% for item in line%}
+            <td>
+              {{item}}
+            </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+</table>
+    </div>
+
+
+<!-- blank space at the bottom of the page -->
+     <div id="blankSpace">
+     </div>
+
+<!-- Go back to the top button -->
+<div class="top">
+    <a href="#page"><button class="button1">Go back to the top</button></a>
+</div>
+    
+		<div id="footer">
+			<p>
+				Address: Norwich Research Park, Norwich NR4 7TJ || Phone number: 074546545654 || Email: Gioacchino@email.com
+			</p>
+		</div>
+
+	</div>
+</body>
+</html>
+
